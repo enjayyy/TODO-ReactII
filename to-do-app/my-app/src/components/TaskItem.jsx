@@ -1,20 +1,31 @@
-import React from 'react';
+import { useState } from 'react'
 
-const TaskItem = ({ task, onDelete, onEdit }) => {
+function TaskItem({ task, deleteTask, editTask }) {
+  const [isEditing, setIsEditing] = useState(false)
+  const [newDescription, setNewDescription] = useState(task.description)
+
   const handleEdit = () => {
-    const newDescription = prompt("Edit task:", task.description);
-    if (newDescription) {
-      onEdit(task.id, newDescription);
+    if (isEditing) {
+      editTask(task.id, newDescription)
     }
-  };
+    setIsEditing(!isEditing)
+  }
 
   return (
-    <div className="task-item">
-      <p>{task.description} <span>{new Date(task.timestamp).toLocaleString()}</span></p>
-      <button onClick={handleEdit}>Edit</button>
-      <button onClick={() => onDelete(task.id)}>Delete</button>
-    </div>
-  );
-};
+    <li>
+      {isEditing ? (
+        <input
+          type="text"
+          value={newDescription}
+          onChange={(e) => setNewDescription(e.target.value)}
+        />
+      ) : (
+        <span>{task.description} - {task.timestamp}</span>
+      )}
+      <button onClick={handleEdit}>{isEditing ? 'Save' : 'Edit'}</button>
+      <button onClick={() => deleteTask(task.id)}>Delete</button>
+    </li>
+  )
+}
 
-export default TaskItem;
+export default TaskItem
