@@ -4,20 +4,21 @@ import TaskList from './components/TaskList'
 import ClearAllButton from './components/ClearAllButton'
 import './App.css'
 
-function App() {
-  const [tasks, setTasks] = useState([])
+function App() { 
 
+  const [tasks, setTasks] = useState([]) 
   const addTask = (taskDescription) => {
     const newTask = {
       id: Date.now(),
       description: taskDescription,
       timestamp: new Date().toLocaleString(),
     }
-    setTasks((prevTasks) => [...prevTasks, newTask])
+    setTasks((prevTasks) => [...prevTasks, newTask]) // Add the new task to the list
+  
   }
 
   const deleteTask = (taskId) => {
-    setTasks((prevTasks) => prevTasks.filter(task => task.id !== taskId))
+    setTasks((prevTasks) => prevTasks.filter(task => task.id !== taskId)) // Remove the task with the given ID
   }
 
 

@@ -22,8 +22,8 @@ function TaskItem({ task, deleteTask, editTask }) {
       ) : (
         <span>{task.description} - {task.timestamp}</span>
       )}
-      <button onClick={handleEdit}>{isEditing ? 'Save' : 'Edit'}</button>
-      <button onClick={() => deleteTask(task.id)}>Delete</button>
+      <button onClick={handleEdit}>{isEditing ? '✔' : '✎'}</button>
+      <button onClick={() => deleteTask(task.id)}>✖</button>
     </li>
   )
 }
