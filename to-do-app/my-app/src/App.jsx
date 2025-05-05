@@ -1,28 +1,32 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import AddTask from './components/AddTask'
 import TaskList from './components/TaskList'
 import ClearAllButton from './components/ClearAllButton'
 import './App.css'
 
-function App() { 
+function App() {
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem('tasks')
+    return savedTasks ? JSON.parse(savedTasks) : []
+  })
 
-  const [tasks, setTasks] = useState([]) 
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks))
+  }, [tasks])
+
   const addTask = (taskDescription) => {
     const newTask = {
       id: Date.now(),
       description: taskDescription,
       timestamp: new Date().toLocaleString(),
     }
-    setTasks((prevTasks) => [...prevTasks, newTask]) // Add the new task to the list
-  
+    setTasks((prevTasks) => [...prevTasks, newTask]) 
   }
 
   const deleteTask = (taskId) => {
-    setTasks((prevTasks) => prevTasks.filter(task => task.id !== taskId)) // Remove the task with the given ID
+    setTasks((prevTasks) => prevTasks.filter(task => task.id !== taskId))
   }
 
-
-  
   const editTask = (taskId, newTaskDescription) => {
     setTasks((prevTasks) =>
       prevTasks.map(task =>
